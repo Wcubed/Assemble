@@ -1,38 +1,52 @@
 __author__ = 'wybe'
 
 import pygame
+import pygame.locals as pyg_locals
 import sys
-from pygame.locals import *
 
 
-pygame.init()
-
-
-FPS = 60
-FPS_CLOCK = pygame.time.Clock()
+COLORS = dict(black=(0, 0, 0))
 
 
 def main():
 
-    screen = pygame.display.set_mode((500, 500), RESIZABLE)
+    # Initialize pygame
+    pygame.init()
+
+    # Set frame rate and create fps clock
+    fps = 60
+    fps_clock = pygame.time.Clock()
+
+    # Setup screen
+    screen = pygame.display.set_mode((500, 500), pyg_locals.RESIZABLE)
     pygame.display.set_caption("Assemble")
 
-    while True:
+    done = False
+
+    # --- Main loop ---
+    while not done:
+
+        # --- Event processing ---
 
         for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
-            elif event.type == VIDEORESIZE:
-                screen = pygame.display.set_mode(event.dict["size"], RESIZABLE)
+            if event.type == pyg_locals.QUIT:
+                done = True
+            elif event.type == pyg_locals.VIDEORESIZE:
+                screen = pygame.display.set_mode(event.dict["size"], pyg_locals.RESIZABLE)
 
-        screen.fill((0, 0, 0))
+        # --- Game logic ---
+
+        # --- Drawing ---
+        screen.fill(COLORS['black'])
 
         pygame.display.update()
 
-        FPS_CLOCK.tick(FPS)
+        fps_clock.tick(fps)
 
-    return
+    # --- Cleanup ---
+
+    pygame.quit()
+    sys.exit()
 
 if __name__ == "__main__":
     main()
