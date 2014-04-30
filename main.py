@@ -1,8 +1,11 @@
 __author__ = 'wybe'
 
+import sys
+
 import pygame
 import pygame.locals as pyg_locals
-import sys
+
+import objects
 
 
 COLORS = dict(black=(0, 0, 0))
@@ -21,16 +24,18 @@ def main():
     screen = pygame.display.set_mode((500, 500), pyg_locals.RESIZABLE)
     pygame.display.set_caption("Assemble")
 
-    done = False
+    run = True
+
+    run = objects.load()
 
     # --- Main loop ---
-    while not done:
+    while run:
 
         # --- Event processing ---
 
         for event in pygame.event.get():
             if event.type == pyg_locals.QUIT:
-                done = True
+                run = False
             elif event.type == pyg_locals.VIDEORESIZE:
                 screen = pygame.display.set_mode(event.dict["size"], pyg_locals.RESIZABLE)
 
