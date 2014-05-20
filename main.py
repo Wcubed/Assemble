@@ -1,11 +1,13 @@
 __author__ = 'wybe'
 
 import sys
+import multiprocessing
+import logging
 
 import pygame
 import pygame.locals as pyg_locals
 
-import objects
+import fileloader
 
 
 COLORS = dict(black=(0, 0, 0))
@@ -13,26 +15,41 @@ COLORS = dict(black=(0, 0, 0))
 
 def main():
 
-    # Initialize pygame
+    logfile = "assemble.log"
+
+    # --- Initialization ---
+
+    # Initialize logfile and pygame
+    with open(logfile, 'w'):
+        pass
+    logging.basicConfig(filename=logfile,
+                        format="%(asctime)s : %(levelname)s : %(message)s",
+                        level=logging.DEBUG)
     pygame.init()
+
+    logging.info("Pygame initialized")
 
     # Set frame rate and create fps clock
     fps = 60
     fps_clock = pygame.time.Clock()
 
     # Setup screen
-    screen = pygame.display.set_mode((500, 500), pyg_locals.RESIZABLE)
+    screen = pygame.display.set_mode((1024, 640), pyg_locals.RESIZABLE)
     pygame.display.set_caption("Assemble")
 
-    run = True
+    logging.info("Window created")
 
-    run = objects.load()
+    # --- Load items ---
+
+    items = fileloader.load_objects()
+    print(items)
+
+    run = True
 
     # --- Main loop ---
     while run:
 
         # --- Event processing ---
-
         for event in pygame.event.get():
             if event.type == pyg_locals.QUIT:
                 run = False
