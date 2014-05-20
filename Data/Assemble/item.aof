@@ -1,0 +1,11 @@
+item:stone:
+sprite = Assemble/stone.png
+end
+
+item:dirt:
+sprite = Assemble/dirt.png
+end
+
+item:horse:
+
+end

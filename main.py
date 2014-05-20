@@ -10,7 +10,7 @@ import pygame.locals as pyg_locals
 import fileloader
 
 
-COLORS = dict(black=(0, 0, 0))
+COLORS = dict(black=(0, 0, 0), white=(255, 255, 255))
 
 
 def main():
@@ -19,30 +19,29 @@ def main():
 
     # --- Initialization ---
 
-    # Initialize logfile and pygame
+    # Initialize logfile and pygame.
     with open(logfile, 'w'):
         pass
     logging.basicConfig(filename=logfile,
-                        format="%(asctime)s : %(levelname)s : %(message)s",
+                        format="%(asctime)s : %(levelname)s: %(message)s",
                         level=logging.DEBUG)
     pygame.init()
 
-    logging.info("Pygame initialized")
+    logging.info("Pygame initialized.")
 
-    # Set frame rate and create fps clock
+    # Set frame rate and create fps clock.
     fps = 60
     fps_clock = pygame.time.Clock()
 
-    # Setup screen
+    # Setup screen.
     screen = pygame.display.set_mode((1024, 640), pyg_locals.RESIZABLE)
     pygame.display.set_caption("Assemble")
 
-    logging.info("Window created")
+    logging.info("Window created.")
 
     # --- Load items ---
 
     items = fileloader.load_objects()
-    print(items)
 
     run = True
 
@@ -60,6 +59,13 @@ def main():
 
         # --- Drawing ---
         screen.fill(COLORS['black'])
+
+        location = [0, 0]
+
+        for item in iter(items.values()):
+            if item.sprite:
+                screen.blit(item.sprite, location)
+                location[0] += item.sprite.get_width()
 
         pygame.display.update()
 
